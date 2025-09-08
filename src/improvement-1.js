@@ -25,3 +25,5 @@ export default function countRs(input = ""){
   }
   return input.split("").filter(char => char === "R").length;
 }
+
+console.log(countRs("Red"));

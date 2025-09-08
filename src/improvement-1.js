@@ -15,6 +15,13 @@
 //   return cnt;
 // }
 
-export default function countRsFromString(string = "") {
-  return string.split('').filter(character => character === "R").length
+// export default function countRsFromString(string = "") {
+//   return string.split('').filter(character => character === "R").length
+// }
+
+export default function countRs(input = ""){
+  if(input === ""){
+    return "Please enter something"
+  }
+  return input.split("").filter(char => char === "R").length;
 }

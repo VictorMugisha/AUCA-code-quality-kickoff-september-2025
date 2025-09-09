@@ -5,27 +5,12 @@
  * @param {string} password
  * @returns {number}
  */
-export default function penaltyPoints(password) {
-  if (typeof password !== "string") return 0
+export default function penaltyPoints(password = "") {
+  // The following line ensures, that password is always a string, like the number 128 -> string "128"
+  if (typeof password !== "string") password = String(password);
 
-  let passwordPoints = 0;
-  let simiralLettersCount = 1;
-
-  const passWordLength = password.length
-
-  for (let i = 1; i < passWordLength; i++) {
-    const CURRENT_CHARACTER = password[i]
-    const PREVIOUS_CHARACTER = password[i - 1]
-
-    if (CURRENT_CHARACTER === PREVIOUS_CHARACTER) {
-      simiralLettersCount++;
-      continue
-    }
-
-    if (simiralLettersCount === 2) passwordPoints += 1;
-    if (simiralLettersCount >= 3) passwordPoints += 2;
-    simiralLettersCount = 1;
-
-  }
-  return passwordPoints;
+  // * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  // * * * INSERT YOUR CODE HERE * * * * * * * * * * * * * *
+  // * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  //
 }

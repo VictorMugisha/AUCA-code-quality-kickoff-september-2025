@@ -1,63 +1,42 @@
 export const forbiddenPasswords = ["amG84h6yeQ", "mc9Q20pdjH", "jnT6Q2f8U5"];
 
-/**
- * Checks if a given password is valid or invalid.
- * If valid it returns true, otherwise false
- * @param {string} password
- * @returns {boolean}
-*/
-export default function isValidPassword(password = "") {
-  // The following line ensures, that password is always a string, like the number 128 -> string "128"
-  if (typeof password !== "string") password = String(password);
-
-  if (password.length !== 10) return false
-
-  const containsNumbers = /\d/;
-  const containsLetters = /[a-zA-Z]/;
-  const containsSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/;
-
-  if (containsSpecialCharacter.test(password)) return false
-
-  const isItMixed = containsLetters.test(password) &&
-                    containsNumbers.test(password)
-  if (!isItMixed) return false
-
-  if (areThereAnyConsecutiveNumbers(password)) return false
-
-  // Check if password contains both lower and upper cases
-  if (
-    password === password.toUpperCase() ||
-    password === password.toLowerCase()
-  )
-    return false
-
-  // Checking if password is not a forbidden password
-  if (forbiddenPasswords.includes(password)) return false
-
-  const setOfPassword = new Set([...password]);
-  if (setOfPassword.size < 4) return false;
-
-  return true;
-}
-
-
-function areThereAnyConsecutiveNumbers(str = "") {
-  for (let i = 0; i < str.length - 2; i++) {
-    const currentDigit = parseInt(str[i]);
-    const nextDigit = parseInt(str[i + 1]);
-    const nextNextDigit = parseInt(str[i + 2]);
-
-    if (!isNaN(currentDigit) && !isNaN(nextDigit) && !isNaN(nextNextDigit)) {
-      // Check for ascending sequence
-      if (nextDigit === currentDigit + 1 && nextNextDigit === nextDigit + 1) {
-        return true;
-      }
-      // Check for descending sequence
-      if (nextDigit === currentDigit - 1 && nextNextDigit === nextDigit - 1) {
-        return true;
-      }
+const isLenght10 = (password) => String(password).length === 10;
+const hasDigit = (password) => /\d/.test(password);
+const onlyLettersAndDigits = (password) => /^[A-Za-z0-9]+$/.test(password);
+const hasLowerAndUper = (password) =>
+  /[A-Z]/.test(password) && /[a-z]/.test(password);
+function noSequentialNumbers(password) {
+  for (let i = 0; i < password.length - 2; i++) {
+    const d1 = password.charCodeAt(i);
+    const d2 = password.charCodeAt(i + 1);
+    const d3 = password.charCodeAt(i + 2);
+    if (
+      /\d/.test(password[i]) &&
+      /\d/.test(password[i + 1]) &&
+      /\d/.test(password[i + 2])
+    ) {
+      if (d2 === d1 + 1 && d3 === d2 + 1) return false;
+      if (d2 === d1 - 1 && d3 === d2 - 1) return false;
     }
   }
+  return true;
+}
+const notforbiddenPasswords = (password) =>
+  !forbiddenPasswords.includes(password);
+const hasAtLeast4DifferentChars = (password) => {
+  let uniq = new Set(password.split(""));
+  return uniq.size >= 4;
+};
 
-  return false;
+export default function isValidPassword(password = "") {
+  let strPass = String(password);
+  return (
+    isLenght10(strPass) &&
+    onlyLettersAndDigits(strPass) &&
+    hasLowerAndUper(strPass) &&
+    noSequentialNumbers(password) &&
+    notforbiddenPasswords(strPass) &&
+    hasDigit(password) &&
+    hasAtLeast4DifferentChars(password)
+  );
 }

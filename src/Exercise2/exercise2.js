@@ -10,6 +10,6 @@ function greet (name = ""){
     if (name = ""){
         return "Hello!";
     }else{
-        return `Hello ${name} !`;
+        return `Hello ${name}!`;
     }
 }

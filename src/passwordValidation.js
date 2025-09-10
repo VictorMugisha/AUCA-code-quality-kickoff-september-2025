@@ -81,7 +81,7 @@ export default function isValidPassword(password = "") {
 
   if (password.length !== 10) return false;
 
-  const hasNumbers = /\d/.test(password);
+  const hasNumbers = /\d/.test(password );
   const hasLetters = /[a-zA-Z]/.test(password);
   const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 

@@ -23,6 +23,6 @@ function calculateAverage (numbers = []) {
     for (let i = 0; i < count; i++) {
         sum += numbers[i];
     }
-    const average = sum / count;
+    const average = sum/count;
     return average;
 }
